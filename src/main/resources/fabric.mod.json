@@ -1,7 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "musicdr",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"name": "Music Duration Reducer",
 	"description": "This is a mod that reduces the duration inbetween music. Cross mod compatablility!",
 	"authors": [

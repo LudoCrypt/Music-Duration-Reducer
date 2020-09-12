@@ -17,29 +17,47 @@ import net.minecraft.sound.MusicSound;
 public class MusicMixin {
 
 	@Shadow
-	private int field_24058;
+	private int minDelay;
 	@Shadow
-	private int field_24059;
+	private int maxDelay;
 
-	@Inject(method = "method_27280", at = @At("HEAD"), cancellable = true)
-	private void bottomInt(CallbackInfoReturnable<Integer> ci) {
-		if (AutoConfig.getConfigHolder(ModConfig.class) != null) {
-			if (ModConfig.getInstance().divide && ModConfig.getInstance().division > 0) {
-				ci.setReturnValue(field_24058 / ModConfig.getInstance().division);
-			} else {
-				ci.setReturnValue(ModConfig.getInstance().minTime * 20);
-			}
+	@Inject(method = "getMinDelay", at = @At("HEAD"), cancellable = true)
+	private void getMinDelay(CallbackInfoReturnable<Integer> ci) {
+		boolean configLoaded = checkConfig();
+		boolean divide = configLoaded ? ModConfig.getInstance().divide : false;
+		int divisionAmount = configLoaded ? ModConfig.getInstance().division : 0;
+		int new_minTime = configLoaded ? ModConfig.getInstance().minTime : minDelay;
+		int new_maxTime = configLoaded ? ModConfig.getInstance().maxTime : maxDelay;
+		boolean minOverMax = configLoaded ? new_minTime > new_maxTime : false;
+		if (configLoaded && !minOverMax && divisionAmount > 0) {
+			if (divide)
+				ci.setReturnValue(minDelay / divisionAmount);
+			else
+				ci.setReturnValue(new_minTime * 20);
 		}
 	}
 
-	@Inject(method = "method_27281", at = @At("HEAD"), cancellable = true)
-	private void topInt(CallbackInfoReturnable<Integer> ci) {
+	@Inject(method = "getMaxDelay", at = @At("HEAD"), cancellable = true)
+	private void getMaxDelay(CallbackInfoReturnable<Integer> ci) {
+		boolean configLoaded = checkConfig();
+		boolean divide = configLoaded ? ModConfig.getInstance().divide : false;
+		int divisionAmount = configLoaded ? ModConfig.getInstance().division : 0;
+		int new_minTime = configLoaded ? ModConfig.getInstance().minTime : minDelay;
+		int new_maxTime = configLoaded ? ModConfig.getInstance().maxTime : maxDelay;
+		boolean minOverMax = configLoaded ? new_minTime > new_maxTime : false;
+		if (configLoaded && !minOverMax && divisionAmount > 0) {
+			if (divide)
+				ci.setReturnValue(maxDelay / divisionAmount);
+			else
+				ci.setReturnValue(new_maxTime * 20);
+		}
+	}
+
+	private boolean checkConfig() {
 		if (AutoConfig.getConfigHolder(ModConfig.class) != null) {
-			if (ModConfig.getInstance().divide && ModConfig.getInstance().division > 0) {
-				ci.setReturnValue(field_24059 / ModConfig.getInstance().division);
-			} else {
-				ci.setReturnValue(ModConfig.getInstance().maxTime * 20);
-			}
+			return true;
+		} else {
+			return false;
 		}
 	}
 

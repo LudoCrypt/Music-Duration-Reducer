@@ -4,14 +4,13 @@
 /build/
 /gradle/
 /run/
-/satin/
 /bin/
+/logs/
 .classpath
 .gitignore
 .project
 .gitattributes
 Run.launch
-*.launch
 *.launch
 desktop.ini
 gradlew

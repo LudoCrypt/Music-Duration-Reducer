@@ -1,19 +1,35 @@
-*.ogg
-/.gradle/
-/.settings/
-/build/
-/gradle/
-/run/
-/bin/
-/logs/
-.classpath
-.gitignore
-.project
-.gitattributes
-Run.launch
+# gradle
+
+.gradle/
+build/
+out/
+classes/
+
+# eclipse
+
 *.launch
-desktop.ini
-gradlew
-gradlew.bat
-settings.gradle
-!*.png
+
+# idea
+
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# vscode
+
+.settings/
+.vscode/
+bin/
+.classpath
+.project
+
+# macos
+
+*.DS_Store
+
+# fabric
+
+run/
+
+.ogg

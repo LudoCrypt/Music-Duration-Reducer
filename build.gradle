@@ -33,9 +33,7 @@ dependencies {
 	modApi("me.shedaniel.cloth:config-2:4.8.1") {
 		exclude(group: "net.fabricmc.fabric-api")
 	}
-	include "me.shedaniel.cloth:config-2:4.8.1"
 	modApi "me.sargunvohra.mcmods:autoconfig1u:3.2.2"
-	include "me.sargunvohra.mcmods:autoconfig1u:3.2.2"
 	modImplementation "io.github.prospector:modmenu:1.14.6+build.31"
 }
 

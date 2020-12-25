@@ -12,12 +12,16 @@
 		"sources": "https://github.com/LudoCrypt/Music-Duration-Reducer",
 		"issues": "https://github.com/LudoCrypt/Music-Duration-Reducer/issues"
 	},
-	"license": "CC0-1.0",
+	"license": "LGPLv3",
 	"icon": "assets/musicdr/icon.png",
 	"environment": "client",
 	"entrypoints": {
-		"client": ["net.ludocrypt.musicdr.MusicDr"],
-		"modmenu": ["net.ludocrypt.musicdr.ModMenuConfig"]
+		"client": [
+			"net.ludocrypt.musicdr.MusicDr"
+		],
+		"modmenu": [
+			"net.ludocrypt.musicdr.config.MusicDrModMenuCompat"
+		]
 	},
 	"mixins": [
 		"musicdr.mixins.json"

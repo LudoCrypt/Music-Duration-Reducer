@@ -26,15 +26,19 @@ repositories {
 
 
 dependencies {
-    minecraft "com.mojang:minecraft:1.16.3"
-    mappings "net.fabricmc:yarn:1.16.3+build.5:v2"
-    modImplementation "net.fabricmc:fabric-loader:0.9.3+build.207"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:0.20.2+build.402-1.16"
-	modApi("me.shedaniel.cloth:config-2:4.8.1") {
-		exclude(group: "net.fabricmc.fabric-api")
-	}
-	modApi "me.sargunvohra.mcmods:autoconfig1u:3.2.2"
-	modImplementation "io.github.prospector:modmenu:1.14.6+build.31"
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+	
+	modImplementation "io.github.prospector:modmenu:${project.modmenu_version}"
+	includeMod "me.shedaniel.cloth:config-2:${project.clothconfig_version}"
+	includeMod "me.sargunvohra.mcmods:autoconfig1u:${project.autoconfig_version}"
+}
+
+def includeMod(String dep) {
+	dependencies.modImplementation(dep)
+	dependencies.include(dep)
 }
 
 processResources {

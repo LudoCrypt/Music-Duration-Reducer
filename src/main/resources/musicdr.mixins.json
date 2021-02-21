@@ -6,7 +6,8 @@
 	"mixins": [
 	],
 	"client": [
-		"MusicMixin"
+		"MusicMixin",
+		"PositionedSoundInstanceMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

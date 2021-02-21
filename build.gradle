@@ -21,6 +21,7 @@ repositories {
 	maven {
 		url = "https://jitpack.io"
 	}
+	maven { url "https://maven.shedaniel.me/" }
 	    jcenter()
 }
 
@@ -32,8 +33,12 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	
 	modImplementation "io.github.prospector:modmenu:${project.modmenu_version}"
-	includeMod "me.shedaniel.cloth:config-2:${project.clothconfig_version}"
-	includeMod "me.sargunvohra.mcmods:autoconfig1u:${project.autoconfig_version}"
+	modImplementation ("me.shedaniel.cloth:cloth-config-fabric:${project.clothconfig_version}") {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+	include ("me.shedaniel.cloth:cloth-config-fabric:${project.clothconfig_version}") {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
 }
 
 def includeMod(String dep) {

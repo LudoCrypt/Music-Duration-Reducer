@@ -5,7 +5,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
+import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.ludocrypt.musicdr.config.MusicDrConfig;
@@ -16,7 +16,7 @@ import net.minecraft.sound.MusicSound;
 public class MusicMixin {
 
 	@Inject(method = "getMinDelay", at = @At("RETURN"), cancellable = true)
-	private void getMinDelay(CallbackInfoReturnable<Integer> ci) {
+	private void musicDr_getMinDelay(CallbackInfoReturnable<Integer> ci) {
 
 		if (AutoConfig.getConfigHolder(MusicDrConfig.class) != null) {
 			MusicDrConfig config = MusicDrConfig.getInstance();
@@ -30,7 +30,7 @@ public class MusicMixin {
 	}
 
 	@Inject(method = "getMaxDelay", at = @At("RETURN"), cancellable = true)
-	private void getMaxDelay(CallbackInfoReturnable<Integer> ci) {
+	private void musicDr_getMaxDelay(CallbackInfoReturnable<Integer> ci) {
 
 		if (AutoConfig.getConfigHolder(MusicDrConfig.class) != null) {
 			MusicDrConfig config = MusicDrConfig.getInstance();

@@ -21,7 +21,7 @@ public class MusicDrConfig implements ConfigData {
 	@ConfigEntry.Gui.CollapsibleObject
 	public Experimental experimental = new Experimental();
 
-	public static class Experimental {
+	public static class Experimental implements ConfigData {
 		@ConfigEntry.Gui.Tooltip()
 		public boolean distortPitch = false;
 		@ConfigEntry.Gui.Tooltip()

@@ -17,7 +17,6 @@ public class MusicMixin {
 
 	@Inject(method = "getMinDelay", at = @At("RETURN"), cancellable = true)
 	private void musicDr_getMinDelay(CallbackInfoReturnable<Integer> ci) {
-
 		if (AutoConfig.getConfigHolder(MusicDrConfig.class) != null) {
 			MusicDrConfig config = MusicDrConfig.getInstance();
 			if (config.divide) {
@@ -26,12 +25,10 @@ public class MusicMixin {
 				ci.setReturnValue(Math.min(ci.getReturnValue(), Math.min(config.minTime * 20, config.maxTime * 20)));
 			}
 		}
-
 	}
 
 	@Inject(method = "getMaxDelay", at = @At("RETURN"), cancellable = true)
 	private void musicDr_getMaxDelay(CallbackInfoReturnable<Integer> ci) {
-
 		if (AutoConfig.getConfigHolder(MusicDrConfig.class) != null) {
 			MusicDrConfig config = MusicDrConfig.getInstance();
 			if (config.divide) {
@@ -40,7 +37,6 @@ public class MusicMixin {
 				ci.setReturnValue(Math.min(ci.getReturnValue(), Math.max(config.minTime * 20, config.maxTime * 20)));
 			}
 		}
-
 	}
 
 }

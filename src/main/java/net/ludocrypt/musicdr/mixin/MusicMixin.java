@@ -16,7 +16,7 @@ import net.minecraft.sound.MusicSound;
 public class MusicMixin {
 
 	@Inject(method = "getMinDelay", at = @At("RETURN"), cancellable = true)
-	private void musicDr_getMinDelay(CallbackInfoReturnable<Integer> ci) {
+	private void musicDr$getMinDelay(CallbackInfoReturnable<Integer> ci) {
 		if (AutoConfig.getConfigHolder(MusicDrConfig.class) != null) {
 			MusicDrConfig config = MusicDrConfig.getInstance();
 			if (config.divide) {
@@ -28,7 +28,7 @@ public class MusicMixin {
 	}
 
 	@Inject(method = "getMaxDelay", at = @At("RETURN"), cancellable = true)
-	private void musicDr_getMaxDelay(CallbackInfoReturnable<Integer> ci) {
+	private void musicDr$getMaxDelay(CallbackInfoReturnable<Integer> ci) {
 		if (AutoConfig.getConfigHolder(MusicDrConfig.class) != null) {
 			MusicDrConfig config = MusicDrConfig.getInstance();
 			if (config.divide) {

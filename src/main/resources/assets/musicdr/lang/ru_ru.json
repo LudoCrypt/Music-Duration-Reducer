@@ -1,0 +1,20 @@
+{
+	"text.autoconfig.musicdr.title": "Редуктор длительности музыки (Наведи курсор на параметры)",
+	"text.autoconfig.musicdr.option.minTime": "Минимальная задержка",
+	"text.autoconfig.musicdr.option.minTime.@Tooltip": "Минимальная задержка для следующего звучания песни (в секундах).",
+	"text.autoconfig.musicdr.option.maxTime": "Максимальная задержка",
+	"text.autoconfig.musicdr.option.maxTime.@Tooltip": "Максимальная задержка для следующего звучания песни (в секундах).",
+	"text.autoconfig.musicdr.option.divide": "Распределение",
+	"text.autoconfig.musicdr.option.divide.@Tooltip": "Распределение исходного времени задержки.",
+	"text.autoconfig.musicdr.option.division": "Деление",
+	"text.autoconfig.musicdr.option.division.@Tooltip": "Коэффициент распределения для параметра Деление.",
+	"text.autoconfig.musicdr.option.experimental": "Экспериментальные",
+	"text.autoconfig.musicdr.option.experimental.distortPitch": "Искажение высоты",
+	"text.autoconfig.musicdr.option.experimental.distortPitch.@Tooltip": "Случайное изменение высоты/тональности каждый раз, когда начинается песня.",
+	"text.autoconfig.musicdr.option.experimental.chanceToPitchChange": "Вероятность искажения высоты",
+	"text.autoconfig.musicdr.option.experimental.chanceToPitchChange.@Tooltip": "Вероятность для песни изменить высоту/тональности",
+	"text.autoconfig.musicdr.option.experimental.minNoteChange": "Минимальное искажение высоты",
+	"text.autoconfig.musicdr.option.experimental.minNoteChange.@Tooltip": "Минимальное изменение тональности (включительно), задавай постепенно для неторопливости/медлительности музыки.",
+	"text.autoconfig.musicdr.option.experimental.maxNoteChange": "Максимальное искажение высоты",
+	"text.autoconfig.musicdr.option.experimental.maxNoteChange.@Tooltip": "Максимальное изменение тональности (включительно), задавай выше для быстрой/высокой музыки."
+}

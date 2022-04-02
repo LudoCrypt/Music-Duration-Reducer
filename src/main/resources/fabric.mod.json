@@ -1,7 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "musicdr",
-	"version": "$version",
+	"version": "${version}",
 	"name": "Music Duration Reducer",
 	"description": "This is a mod that reduces the duration inbetween music. Cross mod compatablility!",
 	"authors": [
@@ -20,15 +20,15 @@
 			"net.ludocrypt.musicdr.MusicDr"
 		],
 		"modmenu": [
-			"net.ludocrypt.musicdr.config.MusicDrModMenuCompat"
+			"net.ludocrypt.musicdr.config.MusicDrModmenu"
 		]
 	},
 	"mixins": [
 		"musicdr.mixins.json"
 	],
 	"depends": {
-		"fabricloader": ">=0.7.4",
+		"fabricloader": ">=0.11.3",
 		"fabric": "*",
-		"minecraft": "1.18.x"
+		"cloth-config": "*"
 	}
 }

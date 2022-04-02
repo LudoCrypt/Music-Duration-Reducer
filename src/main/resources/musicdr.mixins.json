@@ -4,7 +4,7 @@
 	"package": "net.ludocrypt.musicdr.mixin",
 	"compatibilityLevel": "JAVA_16",
 	"client": [
-		"MusicMixin",
+		"MusicSoundMixin",
 		"PositionedSoundInstanceMixin"
 	],
 	"injectors": {

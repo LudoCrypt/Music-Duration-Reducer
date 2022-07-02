@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.ludocrypt.musicdr.config.MusicDrConfig;
 import net.minecraft.sound.MusicSound;
+import net.minecraft.util.math.MathHelper;
 
 @Mixin(MusicSound.class)
 public class MusicSoundMixin {
@@ -27,10 +28,10 @@ public class MusicSoundMixin {
 		if (AutoConfig.getConfigHolder(MusicDrConfig.class) != null) {
 			MusicDrConfig config = MusicDrConfig.getInstance();
 
-			if (config.divide) {
-				ci.setReturnValue(ci.getReturnValue() / Math.abs(config.division));
+			if (config.divide && config.division > 0) {
+				ci.setReturnValue(Math.round(ci.getReturnValue() / Math.abs(config.division)));
 			} else {
-				ci.setReturnValue(Math.min(Math.abs(config.minTime), Math.abs(config.maxTime)) * 20);
+				ci.setReturnValue(Math.round(MathHelper.clamp(config.minTime, config.minTime, config.maxTime) * 20.0F));
 			}
 		}
 	}
@@ -40,10 +41,10 @@ public class MusicSoundMixin {
 		if (AutoConfig.getConfigHolder(MusicDrConfig.class) != null) {
 			MusicDrConfig config = MusicDrConfig.getInstance();
 
-			if (config.divide) {
-				ci.setReturnValue(ci.getReturnValue() / Math.abs(config.division));
+			if (config.divide && config.division > 0) {
+				ci.setReturnValue(Math.round(ci.getReturnValue() / Math.abs(config.division)));
 			} else {
-				ci.setReturnValue(Math.max(Math.abs(config.minTime), Math.abs(config.maxTime)) * 20);
+				ci.setReturnValue(Math.round(MathHelper.clamp(config.maxTime, config.minTime, config.maxTime) * 20.0F));
 			}
 		}
 	}

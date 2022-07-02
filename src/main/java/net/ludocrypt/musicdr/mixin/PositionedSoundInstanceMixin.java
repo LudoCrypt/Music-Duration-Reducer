@@ -1,7 +1,5 @@
 package net.ludocrypt.musicdr.mixin;
 
-import java.util.Random;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
@@ -10,25 +8,47 @@ import me.shedaniel.autoconfig.AutoConfig;
 import net.ludocrypt.musicdr.config.MusicDrConfig;
 import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.random.Random;
 
 @Mixin(PositionedSoundInstance.class)
 public class PositionedSoundInstanceMixin {
 
-	@ModifyArg(method = "music", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/sound/PositionedSoundInstance;<init>(Lnet/minecraft/util/Identifier;Lnet/minecraft/sound/SoundCategory;FFZILnet/minecraft/client/sound/SoundInstance$AttenuationType;DDDZ)V"), index = 3)
+	@ModifyArg(method = "music", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/sound/PositionedSoundInstance;<init>(Lnet/minecraft/util/Identifier;Lnet/minecraft/sound/SoundCategory;FFLnet/minecraft/util/math/random/Random;ZILnet/minecraft/client/sound/SoundInstance$AttenuationType;DDDZ)V"), index = 3)
 	private static float musicdr$music(float in) {
 		if (AutoConfig.getConfigHolder(MusicDrConfig.class) != null) {
 			MusicDrConfig config = MusicDrConfig.getInstance();
 
 			if (config.experimental.distortPitch) {
-				Random random = new Random();
+				Random random = Random.create();
 				if (random.nextDouble() < config.experimental.chanceToPitchChange) {
-					float note = MathHelper.nextBetween(random, Math.min(config.experimental.minNoteChange, config.experimental.maxNoteChange), Math.max(config.experimental.minNoteChange, config.experimental.maxNoteChange));
+					float note;
+
+					if (config.experimental.bellDistribution) {
+						note = (float) MathHelper.clamp(normal(1.0D / config.experimental.bellStandardDeviationReciprocal) * 0.25D, config.experimental.minNoteChange, config.experimental.maxNoteChange);
+					} else {
+						note = MathHelper.nextBetween(random, (float) MathHelper.clamp(config.experimental.minNoteChange, config.experimental.minNoteChange, config.experimental.maxNoteChange), (float) MathHelper.clamp(config.experimental.maxNoteChange, config.experimental.minNoteChange, config.experimental.maxNoteChange));
+					}
+
 					float pitch = (float) Math.pow(2.0F, note / 12.0F);
+
 					return MathHelper.clamp(pitch, 0.5F, 2.0F);
 				}
 			}
 		}
 		return in;
+	}
+
+	private static double normal(double sig) {
+		Random random = Random.create();
+		double u, v, x, y, q;
+		do {
+			u = random.nextDouble();
+			v = 1.7156 * (random.nextDouble() - 0.5);
+			x = u - 0.449871;
+			y = Math.abs(v) + 0.386595;
+			q = Math.sqrt(x) + y * (0.19600 * y - 0.25472 * x);
+		} while (q > 0.27597 && (q > 0.27846 || Math.sqrt(v) > -4.0 * Math.log(u) * Math.sqrt(u)));
+		return sig * v / u;
 	}
 
 }

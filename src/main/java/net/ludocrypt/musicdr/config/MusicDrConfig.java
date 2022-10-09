@@ -1,51 +1,40 @@
 package net.ludocrypt.musicdr.config;
 
-import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.ConfigData;
-import me.shedaniel.autoconfig.annotation.Config;
-import me.shedaniel.autoconfig.annotation.ConfigEntry;
+import eu.midnightdust.lib.config.MidnightConfig.Comment;
+import eu.midnightdust.lib.config.MidnightConfig.Entry;
 
-@Config(name = "musicdr")
-public class MusicDrConfig implements ConfigData {
+public class MusicDrConfig {
 
-	@ConfigEntry.Gui.Tooltip()
-	public float minTime = 0;
+	@Entry
+	public static float minTime = 0;
 
-	@ConfigEntry.Gui.Tooltip()
-	public float maxTime = 30;
+	@Entry
+	public static float maxTime = 30;
 
-	@ConfigEntry.Gui.Tooltip()
-	public boolean divide = false;
+	@Entry
+	public static boolean divide = false;
 
-	@ConfigEntry.Gui.Tooltip()
-	public float division = 2;
+	@Entry
+	public static float division = 2;
 
-	@ConfigEntry.Gui.CollapsibleObject
-	public Experimental experimental = new Experimental();
+	@Comment
+	public static Comment experimental;
 
-	public static class Experimental {
+	@Entry
+	public static boolean distortPitch = false;
 
-		@ConfigEntry.Gui.Tooltip()
-		public boolean distortPitch = false;
+	@Entry
+	public static boolean bellDistribution = true;
 
-		@ConfigEntry.Gui.Tooltip()
-		public boolean bellDistribution = true;
+	@Entry
+	public static float bellStandardDeviationReciprocal = 2;
 
-		@ConfigEntry.Gui.Tooltip()
-		public float bellStandardDeviationReciprocal = 2;
+	@Entry
+	public static float chanceToPitchChange = 0.3F;
 
-		@ConfigEntry.Gui.Tooltip()
-		public float chanceToPitchChange = 0.3F;
+	@Entry
+	public static float minNoteChange = -12;
 
-		@ConfigEntry.Gui.Tooltip()
-		public float minNoteChange = -12;
-
-		@ConfigEntry.Gui.Tooltip()
-		public float maxNoteChange = 12;
-	}
-
-	public static MusicDrConfig getInstance() {
-		return AutoConfig.getConfigHolder(MusicDrConfig.class).getConfig();
-	}
-
+	@Entry
+	public static float maxNoteChange = 12;
 }

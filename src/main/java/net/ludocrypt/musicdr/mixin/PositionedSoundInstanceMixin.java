@@ -4,42 +4,39 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
-import me.shedaniel.autoconfig.AutoConfig;
 import net.ludocrypt.musicdr.config.MusicDrConfig;
 import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.random.RandomGenerator;
 
 @Mixin(PositionedSoundInstance.class)
 public class PositionedSoundInstanceMixin {
 
-	@ModifyArg(method = "music", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/sound/PositionedSoundInstance;<init>(Lnet/minecraft/util/Identifier;Lnet/minecraft/sound/SoundCategory;FFLnet/minecraft/util/math/random/Random;ZILnet/minecraft/client/sound/SoundInstance$AttenuationType;DDDZ)V"), index = 3)
+	@ModifyArg(method = "music", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/sound/PositionedSoundInstance;<init>(Lnet/minecraft/util/Identifier;Lnet/minecraft/sound/SoundCategory;FFLnet/minecraft/util/random/RandomGenerator;ZILnet/minecraft/client/sound/SoundInstance$AttenuationType;DDDZ)V"), index = 3)
 	private static float musicdr$music(float in) {
-		if (AutoConfig.getConfigHolder(MusicDrConfig.class) != null) {
-			MusicDrConfig config = MusicDrConfig.getInstance();
 
-			if (config.experimental.distortPitch) {
-				Random random = Random.create();
-				if (random.nextDouble() < config.experimental.chanceToPitchChange) {
-					float note;
+		if (MusicDrConfig.distortPitch) {
+			RandomGenerator random = RandomGenerator.createLegacy();
+			if (random.nextDouble() < MusicDrConfig.chanceToPitchChange) {
+				float note;
 
-					if (config.experimental.bellDistribution) {
-						note = (float) MathHelper.clamp(normal(1.0D / config.experimental.bellStandardDeviationReciprocal) * 0.25D, config.experimental.minNoteChange, config.experimental.maxNoteChange);
-					} else {
-						note = MathHelper.nextBetween(random, (float) MathHelper.clamp(config.experimental.minNoteChange, config.experimental.minNoteChange, config.experimental.maxNoteChange), (float) MathHelper.clamp(config.experimental.maxNoteChange, config.experimental.minNoteChange, config.experimental.maxNoteChange));
-					}
-
-					float pitch = (float) Math.pow(2.0F, note / 12.0F);
-
-					return MathHelper.clamp(pitch, 0.5F, 2.0F);
+				if (MusicDrConfig.bellDistribution) {
+					note = (float) MathHelper.clamp(normal(1.0D / MusicDrConfig.bellStandardDeviationReciprocal) * 0.25D, MusicDrConfig.minNoteChange, MusicDrConfig.maxNoteChange);
+				} else {
+					note = MathHelper.nextBetween(random, (float) MathHelper.clamp(MusicDrConfig.minNoteChange, MusicDrConfig.minNoteChange, MusicDrConfig.maxNoteChange), (float) MathHelper.clamp(MusicDrConfig.maxNoteChange, MusicDrConfig.minNoteChange, MusicDrConfig.maxNoteChange));
 				}
+
+				float pitch = (float) Math.pow(2.0F, note / 12.0F);
+
+				return MathHelper.clamp(pitch, 0.5F, 2.0F);
 			}
 		}
+
 		return in;
 	}
 
 	private static double normal(double sig) {
-		Random random = Random.create();
+		RandomGenerator random = RandomGenerator.createLegacy();
 		double u, v, x, y, q;
 		do {
 			u = random.nextDouble();

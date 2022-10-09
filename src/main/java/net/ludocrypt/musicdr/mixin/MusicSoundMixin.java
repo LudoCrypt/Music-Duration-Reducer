@@ -7,7 +7,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import me.shedaniel.autoconfig.AutoConfig;
 import net.ludocrypt.musicdr.config.MusicDrConfig;
 import net.minecraft.sound.MusicSound;
 import net.minecraft.util.math.MathHelper;
@@ -25,27 +24,21 @@ public class MusicSoundMixin {
 
 	@Inject(method = "getMinDelay", at = @At("RETURN"), cancellable = true)
 	public void musicdr$getMinDelay(CallbackInfoReturnable<Integer> ci) {
-		if (AutoConfig.getConfigHolder(MusicDrConfig.class) != null) {
-			MusicDrConfig config = MusicDrConfig.getInstance();
 
-			if (config.divide && config.division > 0) {
-				ci.setReturnValue(Math.round(ci.getReturnValue() / Math.abs(config.division)));
-			} else {
-				ci.setReturnValue(Math.round(MathHelper.clamp(config.minTime, config.minTime, config.maxTime) * 20.0F));
-			}
+		if (MusicDrConfig.divide && MusicDrConfig.division > 0) {
+			ci.setReturnValue(Math.round(ci.getReturnValue() / Math.abs(MusicDrConfig.division)));
+		} else {
+			ci.setReturnValue(Math.round(MathHelper.clamp(MusicDrConfig.minTime, MusicDrConfig.minTime, MusicDrConfig.maxTime) * 20.0F));
 		}
+
 	}
 
 	@Inject(method = "getMaxDelay", at = @At("RETURN"), cancellable = true)
 	public void musicdr$getMaxDelay(CallbackInfoReturnable<Integer> ci) {
-		if (AutoConfig.getConfigHolder(MusicDrConfig.class) != null) {
-			MusicDrConfig config = MusicDrConfig.getInstance();
-
-			if (config.divide && config.division > 0) {
-				ci.setReturnValue(Math.round(ci.getReturnValue() / Math.abs(config.division)));
-			} else {
-				ci.setReturnValue(Math.round(MathHelper.clamp(config.maxTime, config.minTime, config.maxTime) * 20.0F));
-			}
+		if (MusicDrConfig.divide && MusicDrConfig.division > 0) {
+			ci.setReturnValue(Math.round(ci.getReturnValue() / Math.abs(MusicDrConfig.division)));
+		} else {
+			ci.setReturnValue(Math.round(MathHelper.clamp(MusicDrConfig.maxTime, MusicDrConfig.minTime, MusicDrConfig.maxTime) * 20.0F));
 		}
 	}
 }
